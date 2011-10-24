@@ -111,7 +111,7 @@ C     Open input file for reading and set the (optional) expected class
 C     to 1 (i.e. ACD)
 C     ---------------
       IUNIT = 10
-      DSNIN = 'test.dat'
+      DSNIN = '../scd96_c.dat'
       OPEN(UNIT=IUNIT , FILE = DSNIN , STATUS = 'OLD')
       ICLASS = 1
 C-----------------------------------------------------------------------

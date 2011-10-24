@@ -1,6 +1,6 @@
 # Compile and link test Fortran program
 #
-f77 -o test.out test.for \
+gfortran -o test.out test.for \
 xxdata_11.for \
 xxrptn.for \
 i4unit.for \
