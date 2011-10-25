@@ -1,0 +1,10 @@
+# vim: syntax=python
+env = Environment()
+
+sources = ['xxdata_11.for', 'xxrptn.for', 'i4unit.for', 'i4fctn.for',
+    'xxword.for', 'xxcase.for', 'xfelem.for', 'xxslen.for']
+
+f2py_builder = Builder(action='f2py -m xxdata_11 -c $SOURCES')
+env.Append(BUILDERS={'F2py': f2py_builder})
+
+env.F2py('../xxdata_11.so', source=['../xxdata_11.pyf', sources])
