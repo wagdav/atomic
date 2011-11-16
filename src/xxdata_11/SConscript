@@ -9,4 +9,6 @@ sources += [ '../xxdata_11.pyf', '../helper_functions.for' ]
 f2py_builder = Builder(action='f2py -m _xxdata_11 -c $SOURCES')
 env.Append(BUILDERS={'F2py': f2py_builder})
 
-env.F2py('../_xxdata_11.so', source=sources)
+shared_object = '../../_xxdata_11.so'
+env.F2py(shared_object, source=sources)
+env.Install('../../atomic', source=shared_object)
