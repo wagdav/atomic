@@ -13,7 +13,9 @@ t_normalized = np.logspace(-7, 0, 50)
 t_normalized -= t_normalized[0]
 times = t_normalized * tau
 
-rt = atomic.RateEquations(ad)
+import atomic.time_dependent_rates as timedep
+rt = timedep.ParallelRateEquations(ad)
+#rt = atomic.RateEquations(ad)
 yy = rt.solve(times, temperature, density)
 
 # time evolution of ionisation states at a certain temperature

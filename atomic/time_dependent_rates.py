@@ -213,6 +213,38 @@ class RateEquationsSolution(object):
         return self.__class__(times, new_concentrations)
 
 
+class ParallelRateEquations(object):
+    def __init__(self, atomic_data):
+        self.atomic_data = atomic_data
+
+        from IPython.parallel import Client
+        rc = Client()
+
+        view = rc[:]
+        view.block = True
+
+        self.view = view
+
+    def solve(self, time, temperature, density):
+        view = self.view
+
+        view.scatter('temperature', temperature)
+        view.scatter('density', temperature)
+        view['eq'] = RateEquations(self.atomic_data)
+        view['time'] = time
+
+        view.execute('res = eq.solve(time, temperature, density)')
+        res = view['res']
+        abundances = [x.abundances for x in res]
+
+        aa = []
+        for i in abundances:
+            y = [j.y for j in i]
+            aa.append(FractionalAbundance(self.atomic_data, np.hstack(y),
+                temperature, density))
+
+        return RateEquationsSolution(time, aa)
+
 if __name__ == '__main__':
     pass
 
